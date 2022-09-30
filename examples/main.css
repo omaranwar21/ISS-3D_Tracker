@@ -1,3 +1,23 @@
+body{
+    background-image: url('../images/low-angle-shot-mesmerizing-starry-sky.jpg');
+}
+
+nav{
+    position: fixed;
+}
+
 .options{
     display: none;
+}
+
+canvas{
+    width: 100vw;
+    max-height: 100vh;
+    background-image: url('../images/low-angle-shot-mesmerizing-starry-sky.jpg');
+}
+
+#globe{
+    display: flex;
+    align-content: center;
+    justify-content: center;
 }
