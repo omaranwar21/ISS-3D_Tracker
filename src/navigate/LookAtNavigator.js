@@ -58,7 +58,7 @@ define([
              * @type {Number}
              * @default 10,000 kilometers
              */
-            this.range = 10e6; // TODO: Compute initial range to fit globe in viewport.
+            this.range = 25e6; // TODO: Compute initial range to fit globe in viewport.
 
             // Development testing only. Set this to false to suppress default navigator limits on 2D globes.
             this.enable2DLimits = true;
