@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <!--NOTE: Most Web WorldWind examples use jquery, Bootstrap and requirejs but those technologies are NOT-->
     <!--required by Web WorldWind. See SimplestExample.html for an example of using Web WorldWind without them.-->
@@ -11,57 +12,60 @@
     <script data-main="WMTS.js" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.17/require.min.js"></script>
     <link rel="stylesheet" href="main.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap"
+        rel="stylesheet">
 </head>
+
 <body>
-<div class="container">
-    <nav>
-        <div class="logo">
-            <img src="../images/nasa-logo-web-rgb.png" alt="">
-        </div>
-        <ul>
-            <div class="a set">Settings</div>
-            <div class="a">Track</div>
-        </ul>
-        <div class="input-group" id="searchBox">
-            <input type="text" class="form-control" placeholder="Search your country" id="searchText"/>
-            <span class="input-group-btn">
-                <button id="searchButton" class="btn btn-primary" type="button">
-                    <span class="glyphicon glyphicon-search"></span>
-                </button>
-            </span>
-        </div>
-    </nav>
-    <div class="row">
-        <div class="col-sm-3 options opt">
-            <h4>Projection</h4>
-            <div class="dropdown" id="projectionDropdown">
+    <div class="container">
+        <nav>
+            <div class="logo">
+                <img src="../images/nasa-logo-web-rgb.png" alt="">
             </div>
-            <br>
-            <h4 id="count">Layers</h4>
-            <div class="list-group" id="layerList">
+            <ul>
+                <div class="a set">Settings</div>
+                <div id="track" class="a">Track</div>
+            </ul>
+            <div class="input-group" id="searchBox">
+                <input type="text" class="form-control" placeholder="Search your country" id="searchText" />
+                <span class="input-group-btn">
+                    <button id="searchButton" class="btn btn-primary" type="button">
+                        <span class="glyphicon glyphicon-search"></span>
+                    </button>
+                </span>
             </div>
-            <br>
-        </div>
-        <div class="col-sm-12" id="globe" style="padding: 0; margin: 0;">
-            <div class="canv row">
-                <canvas class="canvas col-sm-9" id="canvasOne" width="500" height="500">
-                    Your browser does not support HTML5 Canvas.
-                </canvas>
-                <div class="track">
-                    <h1>ISS Tracking</h1>
-                    <br>
-                    <h3>latitude</h3>
-                    <div class="att att1"></div>
-                    <h3>longitude</h3>
-                    <div class="att att2"></div>
-                    <h3>altitude</h3>
-                    <div class="att att3"></div>
+        </nav>
+        <div class="row">
+            <div class="col-sm-3 options opt">
+                <h4>Projection</h4>
+                <div class="dropdown" id="projectionDropdown">
+                </div>
+                <br>
+                <h4 id="count">Layers</h4>
+                <div class="list-group" id="layerList">
+                </div>
+                <br>
+            </div>
+            <div class="col-sm-12" id="globe" style="padding: 0; margin: 0;">
+                <div class="canv row">
+                    <canvas class="canvas col-sm-9" id="canvasOne" width="500" height="500">
+                        Your browser does not support HTML5 Canvas.
+                    </canvas>
+                    <div class="track">
+                        <h1>ISS Tracking</h1>
+                        <br>
+                        <h3>latitude</h3>
+                        <div class="att att1"></div>
+                        <h3>longitude</h3>
+                        <div class="att att2"></div>
+                        <h3>altitude</h3>
+                        <div class="att att3"></div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 </body>
+
 </html>

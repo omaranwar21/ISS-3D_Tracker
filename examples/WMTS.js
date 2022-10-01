@@ -90,7 +90,7 @@ requirejs(
     async function getISS() {
       const response = await fetch(api_url);
       const data = await response.json();
-      console.log( data.latitude);
+      console.log(data.latitude);
       var modelLayer = new WorldWind.RenderableLayer();
       wwd.addLayer(modelLayer);
 
