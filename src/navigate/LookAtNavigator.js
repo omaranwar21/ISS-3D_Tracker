@@ -27,7 +27,7 @@
  */
 /**
  * @exports LookAtNavigator
- */
+ */var i = 0
 define([
         '../geom/Location',
         '../navigate/Navigator',
@@ -51,14 +51,16 @@ define([
              * The geographic location at the center of the viewport.
              * @type {Location}
              */
-            this.lookAtLocation = new Location(30, -110);
-
+            for (i=0;i<360;i++){
+            this.lookAtLocation = new Location(i,i);
+            console.log(i)
+            }
             /**
              * The distance from this navigator's eye point to its look-at location.
              * @type {Number}
              * @default 10,000 kilometers
              */
-            this.range = 10e6; // TODO: Compute initial range to fit globe in viewport.
+            this.range = 30e6; // TODO: Compute initial range to fit globe in viewport.
 
             // Development testing only. Set this to false to suppress default navigator limits on 2D globes.
             this.enable2DLimits = true;
