@@ -67,22 +67,22 @@ requirejs(
     var layerIdentifier = "GPW_Population_Density_2020";
 
     // Called asynchronously to parse and create the WMTS layer
-    var createLayer = function (xmlDom) {
-      // Create a WmtsCapabilities object from the XML DOM
-      var wmtsCapabilities = new WorldWind.WmtsCapabilities(xmlDom);
-      // Retrieve a WmtsLayerCapabilities object by the desired layer name
-      var wmtsLayerCapabilities = wmtsCapabilities.getLayer(layerIdentifier);
-      // Form a configuration object from the WmtsLayerCapabilities object
-      var wmtsConfig = WorldWind.WmtsLayer.formLayerConfiguration(
-        wmtsLayerCapabilities
-      );
-      // Create the WMTS Layer from the configuration object
-      var wmtsLayer = new WorldWind.WmtsLayer(wmtsConfig);
+    // var createLayer = function (xmlDom) {
+    //   // Create a WmtsCapabilities object from the XML DOM
+    //   var wmtsCapabilities = new WorldWind.WmtsCapabilities(xmlDom);
+    //   // Retrieve a WmtsLayerCapabilities object by the desired layer name
+    //   var wmtsLayerCapabilities = wmtsCapabilities.getLayer(layerIdentifier);
+    //   // Form a configuration object from the WmtsLayerCapabilities object
+    //   var wmtsConfig = WorldWind.WmtsLayer.formLayerConfiguration(
+    //     wmtsLayerCapabilities
+    //   );
+    //   // Create the WMTS Layer from the configuration object
+    //   var wmtsLayer = new WorldWind.WmtsLayer(wmtsConfig);
 
-      // Add the layers to WorldWind and update the layer manager
-      wwd.addLayer(wmtsLayer);
-      layerManager.synchronizeLayerList();
-    };
+    //   // Add the layers to WorldWind and update the layer manager
+    //   wwd.addLayer(wmtsLayer);
+    //   layerManager.synchronizeLayerList();
+    // };
 
     // Add a COLLADA model
     const api_url = "https://api.wheretheiss.at/v1/satellites/25544";
@@ -112,7 +112,7 @@ requirejs(
       });
     }
 
-    setInterval(getISS, 1000);
+    setInterval(getISS, 4000);
 
     // Called if an error occurs during WMTS Capabilities document retrieval
     var logError = function (jqXhr, text, exception) {
