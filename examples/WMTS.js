@@ -86,20 +86,21 @@ requirejs(
 
     // Add a COLLADA model
     const api_url = "https://api.wheretheiss.at/v1/satellites/25544";
+    var modelLayer = new WorldWind.RenderableLayer();
 
     async function getISS() {
       const response = await fetch(api_url);
       const data = await response.json();
       console.log(data);
-      var modelLayer = new WorldWind.RenderableLayer();
+      wwd.removeLayer(modelLayer);
       wwd.addLayer(modelLayer);
-
 
       var position = new WorldWind.Position(
         data.latitude,
         data.longitude,
-        data.altitude
+        data.altitude * 1000
       );
+
       var config = {
         dirPath:
           WorldWind.configuration.baseUrl + "examples/collada_models/duck/",
@@ -107,9 +108,19 @@ requirejs(
 
       var colladaLoader = new WorldWind.ColladaLoader(position, config);
       colladaLoader.load("duck.dae", function (colladaModel) {
-        colladaModel.scale = 5000;
+        colladaModel.scale = 4000;
         modelLayer.addRenderable(colladaModel);
       });
+
+      function gotoSat() {
+        var goToPosition = new WorldWind.Position(
+          data.latitude,
+          data.longitude
+        );
+        wwd.goTo(goToPosition);
+      }
+      const track = document.getElementById("track");
+      track.addEventListener("click", gotoSat);
     }
 
     setInterval(getISS, 4000);
