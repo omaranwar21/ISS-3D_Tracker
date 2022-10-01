@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <!--NOTE: Most Web WorldWind examples use jquery, Bootstrap and requirejs but those technologies are NOT-->
     <!--required by Web WorldWind. See SimplestExample.html for an example of using Web WorldWind without them.-->
@@ -11,42 +12,45 @@
     <script data-main="WMTS.js" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.17/require.min.js"></script>
     <link rel="stylesheet" href="main.css">
 </head>
+
 <body>
-<div class="container">
-    <nav>
-        <ul>
-            <li><a href="">logo</a></li>
-            <li><a href="">ABOUT</a></li>
-            <li><a href="">DEMO</a></li>
-            <li><a href="">TRACK</a></li>
-            <div class="input-group" id="searchBox">
-                <input type="text" class="form-control" placeholder="Search your country" id="searchText"/>
-                <span class="input-group-btn">
-                    <button id="searchButton" class="btn btn-primary" type="button">
-                        <span class="glyphicon glyphicon-search"></span>
-                    </button>
-                </span>
+    <div class="container">
+        <nav>
+            <ul>
+                <li><a href="">logo</a></li>
+                <li><a href="">ABOUT</a></li>
+                <li><a href="">DEMO</a></li>
+                <li><a href="">TRACK</a></li>
+                <div class="input-group" id="searchBox">
+                    <input type="text" class="form-control" placeholder="Search your country" id="searchText" />
+                    <span class="input-group-btn">
+                        <button id="searchButton" class="btn btn-primary" type="button">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                    </span>
+                </div>
+            </ul>
+        </nav>
+        <div class="row">
+            <div class="col-sm-3 options">
+                <h4>Projection</h4>
+                <div class="dropdown" id="projectionDropdown">
+                </div>
+                <br>
+                <h4 id="count">Layers</h4>
+                <div class="list-group" id="layerList">
+                </div>
+                <br>
+                <h4>Destination</h4>
             </div>
-        </ul>
-    </nav>
-    <div class="row">
-        <div class="col-sm-3 options">
-            <h4>Projection</h4>
-            <div class="dropdown" id="projectionDropdown">
+            <div class="col-sm-12" id="globe">
+                <canvas id="canvasOne" width="500" height="500">
+                    Your browser does not support HTML5 Canvas.
+                </canvas>
             </div>
-            <br>
-            <h4 id="count">Layers</h4>
-            <div class="list-group" id="layerList">
-            </div>
-            <br>
-            <h4>Destination</h4>
         </div>
-        <div class="col-sm-12" id="globe">
-            <canvas id="canvasOne" width="500" height="500">
-                Your browser does not support HTML5 Canvas.
-            </canvas>
-        </div>
+        <!-- <iframe src='https://solarsystem.nasa.gov/gltf_embed/2378' width='100%' height='450px' frameborder='0' /> -->
     </div>
-</div>
 </body>
+
 </html>
