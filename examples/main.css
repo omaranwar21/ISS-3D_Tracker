@@ -2,7 +2,7 @@ body{
     /* background-image: url('../images/low-angle-shot-mesmerizing-starry-sky.jpg'); */
     background-color: rgb(0, 0, 51);
     font-family: 'Roboto', sans-serif;
-
+    user-select: none;
 }
 
 nav{
@@ -132,4 +132,15 @@ canvas{
     color: black;
     padding: 10px;
     border-radius: 10px;
+}
+
+.opt{
+    position: fixed;
+    z-index: 3;
+    background-color: white;
+    border-radius: 10px;
+    width: 20%;
+    height: 600px;
+    right: 12%;
+    top: 14%;
 }
