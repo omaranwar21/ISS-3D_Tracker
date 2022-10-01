@@ -51,10 +51,8 @@ define([
              * The geographic location at the center of the viewport.
              * @type {Location}
              */
-            for (i=0;i<360;i++){
-            this.lookAtLocation = new Location(i,i);
-            console.log(i)
-            }
+            this.lookAtLocation = new Location(30,30);
+
             /**
              * The distance from this navigator's eye point to its look-at location.
              * @type {Number}

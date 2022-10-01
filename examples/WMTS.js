@@ -67,25 +67,25 @@ requirejs(
     var layerIdentifier = "GPW_Population_Density_2020";
 
     // Called asynchronously to parse and create the WMTS layer
-    // var createLayer = function (xmlDom) {
-    //   // Create a WmtsCapabilities object from the XML DOM
-    //   var wmtsCapabilities = new WorldWind.WmtsCapabilities(xmlDom);
-    //   // Retrieve a WmtsLayerCapabilities object by the desired layer name
-    //   var wmtsLayerCapabilities = wmtsCapabilities.getLayer(layerIdentifier);
-    //   // Form a configuration object from the WmtsLayerCapabilities object
-    //   var wmtsConfig = WorldWind.WmtsLayer.formLayerConfiguration(
-    //     wmtsLayerCapabilities
-    //   );
-    //   // Create the WMTS Layer from the configuration object
-    //   var wmtsLayer = new WorldWind.WmtsLayer(wmtsConfig);
+    var createLayer = function (xmlDom) {
+      // Create a WmtsCapabilities object from the XML DOM
+      var wmtsCapabilities = new WorldWind.WmtsCapabilities(xmlDom);
+      // Retrieve a WmtsLayerCapabilities object by the desired layer name
+      var wmtsLayerCapabilities = wmtsCapabilities.getLayer(layerIdentifier);
+      // Form a configuration object from the WmtsLayerCapabilities object
+      var wmtsConfig = WorldWind.WmtsLayer.formLayerConfiguration(
+        wmtsLayerCapabilities
+      );
+      // Create the WMTS Layer from the configuration object
+      var wmtsLayer = new WorldWind.WmtsLayer(wmtsConfig);
 
-    //   // Add the layers to WorldWind and update the layer manager
-    //   wwd.addLayer(wmtsLayer);
-    //   layerManager.synchronizeLayerList();
-    // };
+      // Add the layers to WorldWind and update the layer manager
+      layerManager.synchronizeLayerList();
+    };
 
     // Add a COLLADA model
     const api_url = "https://api.wheretheiss.at/v1/satellites/25544";
+    var modelLayer = new WorldWind.RenderableLayer();
 
     async function getISS() {
       const response = await fetch(api_url);
@@ -94,12 +94,12 @@ requirejs(
       var modelLayer = new WorldWind.RenderableLayer();
       wwd.addLayer(modelLayer);
 
-
       var position = new WorldWind.Position(
         data.latitude,
         data.longitude,
-        data.altitude
+        data.altitude * 1000
       );
+
       var config = {
         dirPath:
           WorldWind.configuration.baseUrl + "examples/collada_models/duck/",
@@ -107,13 +107,22 @@ requirejs(
 
       var colladaLoader = new WorldWind.ColladaLoader(position, config);
       colladaLoader.load("duck.dae", function (colladaModel) {
-        colladaModel.scale = 5000;
+        colladaModel.scale = 4000;
         modelLayer.addRenderable(colladaModel);
       });
 
       document.querySelector(".att1").innerHTML = data.latitude;
       document.querySelector(".att2").innerHTML = data.longitude;
       document.querySelector(".att3").innerHTML = data.altitude;
+      function gotoSat() {
+        var goToPosition = new WorldWind.Position(
+          data.latitude,
+          data.longitude
+        );
+        wwd.goTo(goToPosition);
+      }
+      const track = document.getElementById("track");
+      track.addEventListener("click", gotoSat);
     }
 
     setInterval(getISS, 4000);
@@ -134,3 +143,13 @@ requirejs(
     var layerManager = new LayerManager(wwd);
   }
 );
+
+const Options = document.querySelector(".opt");
+
+document.querySelector(".set").addEventListener("click", function () {
+  if (Options.classList.contains("options")) {
+    Options.classList.remove("options");
+  } else {
+    Options.classList.add("options");
+  }
+});
