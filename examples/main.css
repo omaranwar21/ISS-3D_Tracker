@@ -1,11 +1,8 @@
 body{
     /* background-image: url('../images/low-angle-shot-mesmerizing-starry-sky.jpg'); */
-    background: linear-gradient(45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-    background-size: 400% 400%;
-
-    animation: gradient 15s ease infinite;
-
-    position: relative;
+    background-color: rgb(0, 0, 51);
+    font-family: 'Roboto', sans-serif;
+    user-select: none;
 }
 
 nav{
@@ -37,18 +34,19 @@ ul{
     list-style-type: none;
 }
 
-li a{
+ .a{
     color: #337ab7;
     text-decoration: none;
     transition: 0.3s;
+    cursor: pointer;
+    padding: 20px;
+    border-radius: 10px;
 }
 
-li a:hover{
+.a:hover{
     color: white;
     background-color: #337ab7;
-    padding: 20px;
     text-decoration: none;
-    border-radius: 10px;
 }
 
 .options{
@@ -60,14 +58,11 @@ canvas{
     width: 100%;
     max-height: 100vh;
     background-image: url('../images/low-angle-shot-mesmerizing-starry-sky.jpg');
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
     height: calc(100vh - 90px);
-    margin: 0px auto 10px;
-    width: 97%;
+    width: 80%;
     border-radius: 10px;
     animation: gradient2 60s ease-in-out infinite;
+    max-height: 600px;
 
 }
 
@@ -103,4 +98,49 @@ canvas{
     display: flex;
     align-content: center;
     justify-content: center;
+}
+
+.canv{
+    display: flex;
+    margin: 10px 0;
+    width: 100%;
+    justify-content: space-between;
+
+}
+
+.canv .track{
+    background-color: white;
+    border-radius: 10px;
+    max-height: 600px;
+    width: 270px;
+    padding: 20px;
+}
+
+.canv .track h1{
+    color: #337ab7;
+}
+
+.canv .track h3{
+    padding-left: 10px;
+}
+
+.canv .track .att{
+    width: 100%;
+    margin: 10px auto;
+    height: 40px;
+    background-color: rgb(216, 216, 216);
+    color: black;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.opt{
+    position: fixed;
+    z-index: 3;
+    background-color: white;
+    border-radius: 10px;
+    width: 20%;
+    height: 600px;
+    right: 12%;
+    top: 14%;
 }
