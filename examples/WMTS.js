@@ -28,73 +28,105 @@
 /**
  * Illustrates how to consume imagery from a Web Map Tile Service (WMTS).
  */
-requirejs([
-        './WorldWindShim',
-        '../examples/LayerManager'
-    ],
-    function (ww,
-              LayerManager) {
-        "use strict";
+requirejs(
+  ["./WorldWindShim", "../examples/LayerManager"],
+  function (ww, LayerManager) {
+    "use strict";
 
-        // Tell WorldWind to log only warnings and errors.
-        WorldWind.Logger.setLoggingLevel(WorldWind.Logger.LEVEL_WARNING);
+    // Tell WorldWind to log only warnings and errors.
+    WorldWind.Logger.setLoggingLevel(WorldWind.Logger.LEVEL_WARNING);
 
-        // Create the WorldWindow.
-        var wwd = new WorldWind.WorldWindow("canvasOne");
+    // Create the WorldWindow.
+    var wwd = new WorldWind.WorldWindow("canvasOne");
 
-        // Create and add layers to the WorldWindow.
-        var layers = [
-            // Imagery layers.
-            {layer: new WorldWind.BMNGLayer(), enabled: true},
-            {layer: new WorldWind.BMNGLandsatLayer(), enabled: false},
-            {layer: new WorldWind.BingAerialLayer(null), enabled: false},
-            {layer: new WorldWind.BingAerialWithLabelsLayer(null), enabled: false},
-            {layer: new WorldWind.BingRoadsLayer(null), enabled: false},
-            // Add atmosphere layer on top of all base layers.
-            {layer: new WorldWind.AtmosphereLayer(), enabled: true},
-            // WorldWindow UI layers.
-            {layer: new WorldWind.CompassLayer(), enabled: true},
-            {layer: new WorldWind.CoordinatesDisplayLayer(wwd), enabled: true},
-            {layer: new WorldWind.ViewControlsLayer(wwd), enabled: true}
-        ];
+    // Create and add layers to the WorldWindow.
+    var layers = [
+      // Imagery layers.
+      { layer: new WorldWind.BMNGLayer(), enabled: true },
+      { layer: new WorldWind.BMNGLandsatLayer(), enabled: false },
+      { layer: new WorldWind.BingAerialLayer(null), enabled: false },
+      { layer: new WorldWind.BingAerialWithLabelsLayer(null), enabled: false },
+      { layer: new WorldWind.BingRoadsLayer(null), enabled: false },
+      // Add atmosphere layer on top of all base layers.
+      { layer: new WorldWind.AtmosphereLayer(), enabled: true },
+      // WorldWindow UI layers.
+      { layer: new WorldWind.CompassLayer(), enabled: true },
+      { layer: new WorldWind.CoordinatesDisplayLayer(wwd), enabled: true },
+      { layer: new WorldWind.ViewControlsLayer(wwd), enabled: true },
+    ];
 
-        for (var l = 0; l < layers.length; l++) {
-            layers[l].layer.enabled = layers[l].enabled;
-            wwd.addLayer(layers[l].layer);
-        }
+    for (var l = 0; l < layers.length; l++) {
+      layers[l].layer.enabled = layers[l].enabled;
+      wwd.addLayer(layers[l].layer);
+    }
 
-        // Web Map Tiling Service information from
-        var serviceAddress = "https://map1.vis.earthdata.nasa.gov/wmts-webmerc/wmts.cgi?&request=GetCapabilities";
-        // Layer displaying Gridded Population of the World density forecast
-        var layerIdentifier = "GPW_Population_Density_2020";
+    // Web Map Tiling Service information from
+    var serviceAddress =
+      "https://map1.vis.earthdata.nasa.gov/wmts-webmerc/wmts.cgi?&request=GetCapabilities";
+    // Layer displaying Gridded Population of the World density forecast
+    var layerIdentifier = "GPW_Population_Density_2020";
 
-        // Called asynchronously to parse and create the WMTS layer
-        var createLayer = function (xmlDom) {
-            // Create a WmtsCapabilities object from the XML DOM
-            var wmtsCapabilities = new WorldWind.WmtsCapabilities(xmlDom);
-            // Retrieve a WmtsLayerCapabilities object by the desired layer name
-            var wmtsLayerCapabilities = wmtsCapabilities.getLayer(layerIdentifier);
-            // Form a configuration object from the WmtsLayerCapabilities object
-            var wmtsConfig = WorldWind.WmtsLayer.formLayerConfiguration(wmtsLayerCapabilities);
-            // Create the WMTS Layer from the configuration object
-            var wmtsLayer = new WorldWind.WmtsLayer(wmtsConfig);
+    // Called asynchronously to parse and create the WMTS layer
+    var createLayer = function (xmlDom) {
+      // Create a WmtsCapabilities object from the XML DOM
+      var wmtsCapabilities = new WorldWind.WmtsCapabilities(xmlDom);
+      // Retrieve a WmtsLayerCapabilities object by the desired layer name
+      var wmtsLayerCapabilities = wmtsCapabilities.getLayer(layerIdentifier);
+      // Form a configuration object from the WmtsLayerCapabilities object
+      var wmtsConfig = WorldWind.WmtsLayer.formLayerConfiguration(
+        wmtsLayerCapabilities
+      );
+      // Create the WMTS Layer from the configuration object
+      var wmtsLayer = new WorldWind.WmtsLayer(wmtsConfig);
 
-            // Add the layers to WorldWind and update the layer manager
-            wwd.addLayer(wmtsLayer);
-            layerManager.synchronizeLayerList();
-        };
+      // Add the layers to WorldWind and update the layer manager
+      wwd.addLayer(wmtsLayer);
+      layerManager.synchronizeLayerList();
+    };
 
-        // Called if an error occurs during WMTS Capabilities document retrieval
-        var logError = function (jqXhr, text, exception) {
-            console.log("There was a failure retrieving the capabilities document: " + text + " exception: " + exception);
-        };
+    // Add a COLLADA model
+    const api_url = "https://api.wheretheiss.at/v1/satellites/25544";
 
-        $.get(serviceAddress).done(createLayer).fail(logError);
+    async function getISS() {
+      const response = await fetch(api_url);
+      const data = await response.json();
+      console.log(data);
+      var modelLayer = new WorldWind.RenderableLayer();
+      wwd.addLayer(modelLayer);
 
-        // Create a layer manager for controlling layer visibility.
-        var layerManager = new LayerManager(wwd);
-    });
 
-    document.querySelector(".set").addEventListener("click", function() {
-        console.log("Gooooooooooo")
+      var position = new WorldWind.Position(
+        data.latitude,
+        data.longitude,
+        data.altitude
+      );
+      var config = {
+        dirPath:
+          WorldWind.configuration.baseUrl + "examples/collada_models/duck/",
+      };
+
+      var colladaLoader = new WorldWind.ColladaLoader(position, config);
+      colladaLoader.load("duck.dae", function (colladaModel) {
+        colladaModel.scale = 5000;
+        modelLayer.addRenderable(colladaModel);
       });
+    }
+
+    setInterval(getISS, 1000);
+
+    // Called if an error occurs during WMTS Capabilities document retrieval
+    var logError = function (jqXhr, text, exception) {
+      console.log(
+        "There was a failure retrieving the capabilities document: " +
+          text +
+          " exception: " +
+          exception
+      );
+    };
+
+    $.get(serviceAddress).done(createLayer).fail(logError);
+
+    // Create a layer manager for controlling layer visibility.
+    var layerManager = new LayerManager(wwd);
+  }
+);
