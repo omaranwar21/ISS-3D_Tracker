@@ -90,7 +90,7 @@ requirejs(
     async function getISS() {
       const response = await fetch(api_url);
       const data = await response.json();
-      console.log(data);
+      console.log( data.latitude);
       var modelLayer = new WorldWind.RenderableLayer();
       wwd.addLayer(modelLayer);
 
@@ -110,6 +110,10 @@ requirejs(
         colladaModel.scale = 5000;
         modelLayer.addRenderable(colladaModel);
       });
+
+      document.querySelector(".att1").innerHTML = data.latitude;
+      document.querySelector(".att2").innerHTML = data.longitude;
+      document.querySelector(".att3").innerHTML = data.altitude;
     }
 
     setInterval(getISS, 4000);
