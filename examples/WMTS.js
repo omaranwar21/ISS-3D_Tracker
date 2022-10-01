@@ -94,6 +94,7 @@ requirejs(
       var modelLayer = new WorldWind.RenderableLayer();
       wwd.addLayer(modelLayer);
 
+
       var position = new WorldWind.Position(
         data.latitude,
         data.longitude,
